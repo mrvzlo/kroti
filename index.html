@@ -110,7 +110,7 @@
             main.appendChild(krot);
          }
 
-         let speed = 0;
+         let speed = navigator.userAgentData.mobile ? 100 : 0;
          while (isNaN(speed) || speed <= 0) {
             speed = +prompt('Введите скорость кротов от 10 до 1000', 500);
          }
@@ -118,8 +118,8 @@
          const skip = col * 2;
          setInterval(() => {
             const active = collection[Math.floor(Math.random() * (collection.length - skip)) + skip];
-            active.classList.remove('active');
             active.classList.add('active');
+            setTimeout(() => active.classList.remove('active'), 2000);
          }, speed);
       </script>
    </body>
