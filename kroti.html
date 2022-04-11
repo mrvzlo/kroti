@@ -1,0 +1,126 @@
+<html>
+   <head>
+      <!--1 elements by class; 2 css animation logic; 3 timeout; 4 negative margin-->
+      <style>
+         .krot {
+            border: solid 2px black;
+            border-radius: 100px;
+            width: 60px;
+            height: 150px;
+            margin-bottom: -50px;
+            background: white;
+            position: absolute;
+         }
+
+         html {
+            overflow: hidden;
+         }
+
+         .krot.active {
+            animation-name: krotsmile;
+            animation-duration: 2s;
+         }
+
+         @keyframes krotsmile {
+            0% {
+               transform: translateY(0);
+            }
+            80% {
+               transform: translateY(-40%);
+            }
+            100% {
+               transform: translateY(0);
+            }
+         }
+
+         .eye {
+            border: solid 5px black;
+            border-radius: 100px;
+            width: 5px;
+            height: 5px;
+            background: black;
+            margin-top: 25px;
+            outline: 2px solid black;
+         }
+
+         .mouth {
+            border: solid 4px black;
+            border-top: none;
+            border-left: none;
+            border-right: none;
+            border-radius: 50%;
+            width: 40px;
+            margin-top: 0px;
+            height: 20px;
+         }
+
+         .head {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+         }
+      </style>
+   </head>
+   <body>
+      <div id="main"></div>
+      <script>
+         function byte() {
+            return Math.floor(Math.random() * 128 + 128).toString(16);
+         }
+
+         function inner(parent) {
+            const color = '#' + byte() + byte() + byte();
+            var head = document.createElement('div');
+            head.style.position = 'relative';
+            var leftEye = document.createElement('div');
+            leftEye.classList.add('eye');
+            var rightEye = document.createElement('div');
+            rightEye.classList.add('eye');
+            head.classList.add('head');
+            var mounth = document.createElement('div');
+            mounth.classList.add('mouth');
+            leftEye.style.borderColor = color;
+            rightEye.style.borderColor = color;
+            head.append(leftEye);
+            head.append(rightEye);
+            head.append(mounth);
+            krot.append(head);
+         }
+
+         const main = document.getElementById('main');
+         let x = 0;
+         let y = 0;
+         let row = 0;
+         let col = 0;
+         const width = window.innerWidth;
+         while (y < window.innerHeight) {
+            var krot = document.createElement('div');
+            krot.classList.add('krot');
+            krot.style.left = x;
+            krot.style.top = y;
+            x += 30;
+            col++;
+            if (x >= width - 60) {
+               x = row % 2 == 0 ? 0 : 15;
+               y += 20;
+               col = 0;
+               row++;
+            }
+            inner(krot);
+            main.appendChild(krot);
+         }
+
+         let speed = 0;
+         while (isNaN(speed) || speed <= 0) {
+            speed = +prompt('Введите скорость кротов от 10 до 1000', 500);
+         }
+         const collection = document.getElementsByClassName('krot');
+         const skip = col * 2;
+         setInterval(() => {
+            const active = collection[Math.floor(Math.random() * (collection.length - skip)) + skip];
+            active.classList.remove('active');
+            active.classList.add('active');
+         }, speed);
+      </script>
+   </body>
+</html>
