@@ -98,6 +98,10 @@
             krot.classList.add('krot');
             krot.style.left = x;
             krot.style.top = y;
+            if (navigator.userAgentData.mobile) {
+               krot.style.width = '100px';
+               krot.style.height = '300px';
+            }
             x += 30;
             col++;
             if (x >= width - 60) {
